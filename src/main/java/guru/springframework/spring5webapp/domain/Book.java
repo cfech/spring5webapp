@@ -23,6 +23,10 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "authur_id"))
     private Set<Author> authors = new HashSet<>();
 
+    //many books to one publisher
+    @ManyToOne
+    private Publisher publisher;
+
     //JPA requires a zero argument constructor
     public Book() {
     }
@@ -30,6 +34,14 @@ public class Book {
     public Book(String title, String isbn) {
         this.title = title;
         this.isbn = isbn;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public long getId() {
@@ -86,7 +98,6 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
                 '}';
     }
 }

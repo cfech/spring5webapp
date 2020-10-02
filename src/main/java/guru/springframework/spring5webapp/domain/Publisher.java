@@ -1,9 +1,8 @@
 package guru.springframework.spring5webapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Publisher {
@@ -17,6 +16,14 @@ public class Publisher {
     private String state;
     private String zipcode;
 
+    //publisher is one and has many books
+    @OneToMany
+    //give hibernate a hint to add a publisher id to the book record to create a
+    // foreign key
+    @JoinColumn(name = "publisher_id")
+    private Set<Book> books = new HashSet<>();
+
+
     public Publisher() {
     }
 
@@ -26,6 +33,14 @@ public class Publisher {
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public String getName() {

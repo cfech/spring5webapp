@@ -35,8 +35,12 @@ public class BootstrapData implements CommandLineRunner {
         // to the book
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "efrkjeb");
+
+        //creating the author book relationship
         eric.getBooks().add(ddd);
         ddd.getAuthors().add(eric);
+
+
 
         //save the new book and author to our repository
         authorRepository.save(eric);
@@ -51,7 +55,7 @@ public class BootstrapData implements CommandLineRunner {
         bookRepository.save(noEJB);
 
 
-        System.out.println("Number of books " + bookRepository.count());
+
 
 
         //part fo challenge
@@ -61,5 +65,16 @@ public class BootstrapData implements CommandLineRunner {
         publisherRepository.save(publisher);
         System.out.println("Publisher count " + publisherRepository.count());
 
+        //creating the book publisher relationship
+        ddd.setPublisher(publisher);
+        publisher.getBooks().add(ddd);
+        publisherRepository.save(publisher);
+
+        noEJB.setPublisher(publisher);
+        publisher.getBooks().add(noEJB);
+        publisherRepository.save(publisher);
+
+        System.out.println("Number of books " + bookRepository.count());
+        System.out.println("Published books amount " + publisher.getBooks().size());
     }
 }
